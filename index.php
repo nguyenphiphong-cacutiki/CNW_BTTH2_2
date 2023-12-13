@@ -1,49 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home page</title>
-    <link rel="stylesheet" href="./asset/bootstrap-5.3.2/css/bootstrap.min.css">
-</head>
-<body>
-    <?php include './layout/header.php'; ?>
-    <div class="container mt-5">
-        <?php
-            include './config/Database.php';
-            include './class/article.php';
-            $db = new Database();
-            $article = new Article($db);
-            $res = $article->getArticles();
+<?php 
 
-        ?>
-        <?php foreach($res as $row): ?>
-            <?php 
-                $dateCreate = date_create($row['created']); // cast datetime in data to date format
-                $date = date_format($dateCreate, "d F Y"); // format
-                $mes = substr($row['message'], 0, 200).'...';
-            ?>
-        <div class="row  d-flex justify-content-center">
-            <div class="col-8">
-                <div>
-                    <h1 class="text-primary fs-3"><?=$row['title']?></h1>
-                    <h3>Published on <?=$date?> Category: <?=$row['category']?></h3>
-                    <p class="text-body" style="text-align: justify;"><?=$mes?></p>
-                    <a href="view.php?id=<?=$row['id']?>" class="btn btn-success text-transform float-end">read more</a>
-                </div>
-            </div>
-        </div>
-        <?php endforeach; ?>
-
-    </div>
-    <?php include './layout/footer.php'; ?>
+$c = isset($_GET['c'])? $_GET['c']:'home_guest';
+$a = isset($_GET['a'])? $_GET['a']:'show_guest';
+$id = isset($_GET['id'])? $_GET['id']:0;
 
 
 
-
-
-    <!-- link lib  -->
-    <script src="./asset/bootstrap-5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script src="./asset/jquery-3.7.1.min.js"></script>
-</body>
-</html>
+if($c == 'home_guest' && $a == 'show_guest'){
+    include 'controllers/ShowController.php';
+    $myShowController = new ShowController();
+    $myShowController->show();
+}else if($c == 'home_guest' && $a == 'detail'){
+    include 'controllers/DetailController.php';
+    $myDetailCtr = new DetailController();
+    $myDetailCtr->show($id);
+}

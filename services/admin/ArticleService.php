@@ -1,5 +1,5 @@
 <?php
-    class Article{
+    class ArticleService{
         private $conn;
 
         public function __construct(Database $db){

@@ -5,27 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./asset/bootstrap-5.3.2/css/bootstrap.min.css">
     <?php
-        include './config/Database.php';
-        include './class/article.php';
+       
         $mes = '';
         $date = '';
         $user = '';
         $title = 'Title';
-        if(isset($_GET['id'])){
-            $db = new Database();
-            $article = new Article($db);
-            $res = $article->getArticleById($_GET['id']);
-            $mes = $res['message'];
-            $date = date_format(date_create($res['created']), "d F Y");
-            $user = $res['first_name'] .' '. $res['last_name'];
-            $title = $res['title'];
-        }
+           
+        $mes = $res['message'];
+        $date = date_format(date_create($res['created']), "d F Y");
+        $user = $res['first_name'] .' '. $res['last_name'];
+        $title = $res['title'];
+        
         
     
     ?>
     <title><?=$title?></title>
 </head>
-<?php include './layout/header.php'; ?>
+<?php include ROOT.'/views/layout/header.php'; ?>
 <body>
     <div class="container">
         <div class="row p-3 mt-3 mb-3">
@@ -45,4 +41,4 @@
 </body>
 </html>
 
-<?php include './layout/footer.php'; ?>
+<?php include  ROOT.'/views/layout/footer.php'; ?>
